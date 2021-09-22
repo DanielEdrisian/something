@@ -10,7 +10,8 @@ We start by generating edges for the cameraman picture using gradient magnitude 
 
 ![](./inputs/1.1/cameraman.png)
 
-
+| Dx | Dy |
+| ![](./outputs/1.1/dx-cameraman.jpeg) | ![](./outputs/1.1/dy-cameraman.jpeg) |
 Dx: ![](./outputs/1.1/dx-cameraman.jpeg)
 
 Dy: ![](./outputs/1.1/dy-cameraman.jpeg)
