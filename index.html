@@ -1,0 +1,279 @@
+<!doctype html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<title>Programming Project #2 (proj2) 3</title>
+</head>
+<body>
+<p>Programming Project #2 (proj2)</p>
+
+<p>Fun with Filters and Frequencies!</p>
+
+<h2>Part 1: Fun with Filters</h2>
+
+<h2>Part 1.1: Finite Difference Operator</h2>
+
+<p>We start by generating edges for the cameraman picture using gradient magnitude computation. The way it works is by first generating the the horizontal derivative of the image, followed by the vertical derivative of the image, and then by taking the square root of the sum of squares of both deritvatives, just like how you compute the pythagorean theorem. This way, the negative values in each derivative image will turn into positives and you will be left with an image where edges are all colored white.</p>
+
+<figure>
+<img width=300 src="./inputs/1.1/cameraman.png" alt="Original Cameraman" />
+<figcaption>Original Cameraman</figcaption>
+</figure>
+
+<p><img width=300 src="./outputs/1.1/dx-cameraman.jpeg" alt="Dx" /> <img width=300 src="./outputs/1.1/dy-cameraman.jpeg" alt="Dy" /></p>
+
+<figure>
+<img width=300 src="./outputs/1.1/edge-cameraman.jpeg" alt="Gradient magnitude" />
+<figcaption>Gradient magnitude</figcaption>
+</figure>
+
+<p>Then, we binarize the gradient magnitude in order to remove a lot of the noise within the image:</p>
+
+<figure>
+<img width=300 src="./outputs/1.1/binarized-edge-cameraman.jpeg" alt="" />
+</figure>
+
+<h2>Part 1.2: Derivative of Gaussian (DoG) Filter</h2>
+
+<p>First, we try to blur the image before doing what we did in the last part. The results are as follows:</p>
+
+<p><img width=300 src="./inputs/1.1/cameraman.png" alt="Original" /> <img width=300 src="./outputs/1.2/cameraman-blur.jpeg" alt="Blured" /> </p>
+
+<figure>
+<img width=300 src="./outputs/1.2/edge-cameraman.jpeg" alt="Edge gradient magnitude" />
+<figcaption>Edge gradient magnitude</figcaption>
+</figure>
+
+<figure>
+<img width=300 src="./outputs/1.2/binarized-edge-cameraman.jpeg" alt="Binarized" />
+<figcaption>Binarized</figcaption>
+</figure>
+
+<p>Then, instead of applying a gaussian blur and then the derivatives as two convolutional operations, we convolve the gaussian by the derivatives so that the whole operation is done in one convolution on the image.</p>
+
+<p><img width=300 src="./outputs/1.2/blurrdx.jpeg" alt="Derivative of gaussian Dx" /> <img width=300 src="./outputs/1.2/blurrdy.jpeg" alt="Derivative of gaussian Dy" /></p>
+
+<p><img width=300 src="./outputs/1.2/dx-cameraman.jpeg" alt="Dx result" /> <img width=300 src="./outputs/1.2/dy-cameraman.jpeg" alt="Dy result" /> </p>
+
+<figure>
+<img width=300 src="./outputs/1.2/dog-edge-cameraman.jpeg" alt="Gradient magnitude" />
+<figcaption>Gradient magnitude</figcaption>
+</figure>
+
+<figure>
+<img width=300 src="./outputs/1.2/binarized-dog-edge-cameraman.jpeg" alt="Binarized" />
+<figcaption>Binarized</figcaption>
+</figure>
+
+<h2>Part 2: Fun with Frequencies!</h2>
+
+<h2>Part 2.1: Image &quot;Sharpening&quot;</h2>
+
+<p>We use un-sharp masking in order to sharpen the following images.</p>
+
+<h3>Sharpen Taj Mahal</h3>
+
+<p><img width=300 src="./inputs/2.1/taj.jpeg" alt="Original" /> <img width=300 src="./outputs/2.1/sharp-taj.jpeg" alt="Sharpened" /></p>
+
+<h3>Sharpen Dog</h3>
+
+<p><img width=300 src="./inputs/2.1/dog.jpeg" alt="Original" /> <img width=300 src="./outputs/2.1/sharp-dog.jpeg" alt="Sharpened" /></p>
+
+<h3>Blur image, then sharpen</h3>
+
+<p>I tried to blur a sharp image, then sharpen it back to see what happens. The result is a little blurrier and has fewer high frequencies than the original image.</p>
+
+<p><img width=300 src="./inputs/2.1/sharp.jpeg" alt="Original" /> <img width=300 src="./outputs/2.1/blur-sharp.jpeg" alt="Blured" /> <img width=300 src="./outputs/2.1/sharp-blur-sharp.jpeg" alt="Sharpened of Blured" /></p>
+
+<h2>Part 2.2: Hybrid Images</h2>
+
+<p>In this part, I layer two images on top of each other so that in distance it appears as one, and close up it appears as the other. The images are first aligned so they match each other's geometries. For the first image, the lower frequencies are use and they are grayscaled. For the second image, the higher frequencies are used with their color.</p>
+
+<h3>Derek and Nutmeg</h3>
+
+<p><img width=300 src="./inputs/2.2/DerekPicture.jpg" alt="Derek" /> <img width=300 src="./inputs/2.2/nutmeg.jpg" alt="Nutmeg" /></p>
+
+<p><img width=300 src="./inputs/2.2/DerekPicture-aligned.jpeg" alt="Derek Aligned" /> <img width=300 src="./inputs/2.2/nutmeg-aligned.jpeg" alt="Nutmeg Aligned" /></p>
+
+<figure>
+<img width=300 src="./outputs/2.2/DerekPicture-aligned-nutmeg-aligned-combined.jpeg" alt="Nutmeg over Derek" />
+<figcaption>Nutmeg over Derek</figcaption>
+</figure>
+
+<p>The fourier results of the images are shown below:</p>
+
+<p><img width=300 src="./outputs/2.2/DerekPicture-aligned-fft.jpeg" alt="Derek FFT" /> <img width=300 src="./outputs/2.2/DerekPicture-aligned-blur-fft.jpeg" alt="Derek Blur (low frequencies) FFT" /> </p>
+
+<p><img width=300 src="./outputs/2.2/nutmeg-aligned-fft.jpeg" alt="Nutmeg FFT" /> <img width=300 src="./outputs/2.2/nutmeg-aligned-high-fft.jpeg" alt="Nutmeg high frequencies FFT" /></p>
+
+<figure>
+<img width=300 src="./outputs/2.2/DerekPicture-aligned-nutmeg-aligned-combined-fft.jpeg" alt="Combination Derek + Nutmeg FFTs" />
+<figcaption>Combination Derek + Nutmeg FFTs</figcaption>
+</figure>
+
+<h3>Airplane and Eagle (Failure)</h3>
+
+<p>Because the eagle has a much larger and much darker wing than the plane, it isn't as smooth as the other results. It's obvious that two images are layer on each other. Other than that, the tips look good.</p>
+
+<p><img width=300 src="./inputs/2.2/airplane.jpeg" alt="Airplane" /> <img width=300 src="./inputs/2.2/eagle.jpeg" alt="Eagle" /></p>
+
+<p><img width=300 src="./inputs/2.2/airplane-aligned.jpeg" alt="Airplane Aligned" /> <img width=300 src="./inputs/2.2/eagle-aligned.jpeg" alt="Eagle Aligned" /></p>
+
+<figure>
+<img width=300 src="./outputs/2.2/eagle-aligned-airplane-aligned-combined.jpeg" alt="Eagle over Airplane" />
+<figcaption>Eagle over Airplane</figcaption>
+</figure>
+
+<h3>John DeNero and Josh Hug</h3>
+
+<p>This is my favorite.</p>
+
+<p><img width=300 src="./inputs/2.2/denero.jpeg" alt="John DeNero" /> <img width=300 src="./inputs/2.2/josh.jpeg" alt="Josh Hug" /></p>
+
+<p><img width=300 src="./inputs/2.2/denero-aligned.jpeg" alt="John DeNero Aligned" /> <img width=300 src="./inputs/2.2/josh-aligned.jpeg" alt="Josh Hug Aligned" /></p>
+
+<figure>
+<img width=300 src="./outputs/2.2/denero-aligned-josh-aligned-combined.jpeg" alt="Josh Hug over John DeNero " />
+<figcaption>Josh Hug over John DeNero </figcaption>
+</figure>
+
+<h2>Multi-resolution Blending and the Oraple journey</h2>
+
+<h2>Part 2.3: Gaussian and Laplacian Stacks</h2>
+
+<p>Here, we try to blend an apple and orange together. We use basic alpha blending where the images start smoothly reducing in alpha in the middle, so that they can be added on top of each other and appear as if they go into each other.</p>
+
+<p><img width=300 src="./inputs/2.3/apple.jpeg" alt="Apple" /> <img width=300 src="./inputs/2.3/orange.jpeg" alt="Orange" /></p>
+
+<p>The following is the stack the closely resembles the figure in the original paper. Rows 1, 2, and 3 show the 0th, 2nd, and 4th laplacians of the apple, orange, and the apple-orange blend. The last row is just the original images alpha blended.</p>
+
+<p><img width=300 src="./outputs/2.3/apple-laplacian-stack-0.jpeg" alt="" /> <img width=300 src="./outputs/2.3/orange-laplacian-stack-2.jpeg" alt="" /> <img width=300 src="./outputs/2.3/apple-orange-laplacian-blend-0.jpeg" alt="" /></p>
+
+<p><img width=300 src="./outputs/2.3/apple-laplacian-stack-2.jpeg" alt="" /> <img width=300 src="./outputs/2.3/orange-laplacian-stack-0.jpeg" alt="" /> <img width=300 src="./outputs/2.3/apple-orange-laplacian-blend-2.jpeg" alt="" /></p>
+
+<p><img width=300 src="./outputs/2.3/apple-laplacian-stack-4.jpeg" alt="" /> <img width=300 src="./outputs/2.3/orange-laplacian-stack-4.jpeg" alt="" /> <img width=300 src="./outputs/2.3/apple-orange-laplacian-blend-4.jpeg" alt="" /></p>
+
+<p><img width=300 src="./outputs/2.3/apple-blend.jpeg" alt="" /> <img width=300 src="./outputs/2.3/orange-blend.jpeg" alt="" /> <img width=300 src="./outputs/2.3/apple-orange-blend.jpeg" alt="" /></p>
+
+<h2>Part 2.4: Multiresolution Blending (a.k.a. the oraple!)</h2>
+
+<p>To improve on the blending, we settle on a better algorithm that combines each level of the laplacians in the stacks and adds it on top of the lowest gaussian blur. This results in smooth blends between images that appear real. The algorithm is taken from the original paper.</p>
+
+<h3>The Oraple</h3>
+
+<p><img width=300 src="./inputs/2.4/apple-orange/apple.jpeg" alt="Apple" /> <img width=300 src="./inputs/2.4/apple-orange/orange.jpeg" alt="Orange" /></p>
+
+<p><img width=300 src="./outputs/2.4/apple-orange/apple-gaussian-stack-0.jpeg" alt="" /> <img width=300 src="./outputs/2.4/apple-orange/apple-laplacian-stack-0.jpeg" alt="" /></p>
+
+<p><img width=300 src="./outputs/2.4/apple-orange/apple-gaussian-stack-1.jpeg" alt="" /> <img width=300 src="./outputs/2.4/apple-orange/apple-laplacian-stack-1.jpeg" alt="" /></p>
+
+<p><img width=300 src="./outputs/2.4/apple-orange/apple-gaussian-stack-2.jpeg" alt="" /> <img width=300 src="./outputs/2.4/apple-orange/apple-laplacian-stack-2.jpeg" alt="" /></p>
+
+<p><img width=300 src="./outputs/2.4/apple-orange/apple-gaussian-stack-3.jpeg" alt="" /> <img width=300 src="./outputs/2.4/apple-orange/apple-laplacian-stack-3.jpeg" alt="" /></p>
+
+<p><img width=300 src="./outputs/2.4/apple-orange/apple-gaussian-stack-4.jpeg" alt="" /> <img width=300 src="./outputs/2.4/apple-orange/apple-laplacian-stack-4.jpeg" alt="" /></p>
+
+<p><img width=300 src="./outputs/2.4/apple-orange/orange-gaussian-stack-0.jpeg" alt="" /> <img width=300 src="./outputs/2.4/apple-orange/orange-laplacian-stack-0.jpeg" alt="" /></p>
+
+<p><img width=300 src="./outputs/2.4/apple-orange/orange-gaussian-stack-1.jpeg" alt="" /> <img width=300 src="./outputs/2.4/apple-orange/orange-laplacian-stack-1.jpeg" alt="" /></p>
+
+<p><img width=300 src="./outputs/2.4/apple-orange/orange-gaussian-stack-2.jpeg" alt="" /> <img width=300 src="./outputs/2.4/apple-orange/orange-laplacian-stack-2.jpeg" alt="" /></p>
+
+<p><img width=300 src="./outputs/2.4/apple-orange/orange-gaussian-stack-3.jpeg" alt="" /> <img width=300 src="./outputs/2.4/apple-orange/orange-laplacian-stack-3.jpeg" alt="" /></p>
+
+<p><img width=300 src="./outputs/2.4/apple-orange/orange-gaussian-stack-4.jpeg" alt="" /> <img width=300 src="./outputs/2.4/apple-orange/orange-laplacian-stack-4.jpeg" alt="" /></p>
+
+<p><img width=300 src="./outputs/2.4/apple-orange/apple-orange-laplacian-blend-0.jpeg" alt="" />
+ <img width=300 src="./outputs/2.4/apple-orange/mask-stack-0.jpeg" alt="" /></p>
+
+<p><img width=300 src="./outputs/2.4/apple-orange/apple-orange-laplacian-blend-1.jpeg" alt="" />
+ <img width=300 src="./outputs/2.4/apple-orange/mask-stack-1.jpeg" alt="" /></p>
+
+<p><img width=300 src="./outputs/2.4/apple-orange/apple-orange-laplacian-blend-2.jpeg" alt="" />
+ <img width=300 src="./outputs/2.4/apple-orange/mask-stack-2.jpeg" alt="" /></p>
+
+<p><img width=300 src="./outputs/2.4/apple-orange/apple-orange-laplacian-blend-3.jpeg" alt="" />
+ <img width=300 src="./outputs/2.4/apple-orange/mask-stack-3.jpeg" alt="" /></p>
+
+<p><img width=300 src="./outputs/2.4/apple-orange/apple-orange-laplacian-blend-4.jpeg" alt="" />
+ <img width=300 src="./outputs/2.4/apple-orange/mask-stack-4.jpeg" alt="" /></p>
+
+<figure>
+<img width=300 src="./outputs/2.4/apple-orange/apple-orange-blend-combined.jpeg" alt="" />
+</figure>
+
+<h3>Sun in a Sunflower</h3>
+
+<p><img width=300 src="./inputs/2.4/sun-flower/sun.jpeg" alt="Sun" /> <img width=300 src="./inputs/2.4/sun-flower/flower.jpeg" alt="Sunflower" /></p>
+
+<figure>
+<img width=300 src="./outputs/2.4/sun-flower/sun-flower-blend-combined.jpeg" alt="Sun in sunflower" />
+<figcaption>Sun in sunflower</figcaption>
+</figure>
+
+<h3>Brain in a walnut (favorite)</h3>
+
+<p><img width=300 src="./inputs/2.4/brain-walnut/brain.jpeg" alt="Brain" /> <img width=300 src="./inputs/2.4/brain-walnut/walnut.jpeg" alt="Walnut" /></p>
+
+<p><img width=300 src="./outputs/2.4/brain-walnut/brain-gaussian-stack-0.jpeg" alt="" /> <img width=300 src="./outputs/2.4/brain-walnut/brain-laplacian-stack-0.jpeg" alt="" /></p>
+
+<p><img width=300 src="./outputs/2.4/brain-walnut/brain-gaussian-stack-1.jpeg" alt="" /> <img width=300 src="./outputs/2.4/brain-walnut/brain-laplacian-stack-1.jpeg" alt="" /></p>
+
+<p><img width=300 src="./outputs/2.4/brain-walnut/brain-gaussian-stack-2.jpeg" alt="" /> <img width=300 src="./outputs/2.4/brain-walnut/brain-laplacian-stack-2.jpeg" alt="" /></p>
+
+<p><img width=300 src="./outputs/2.4/brain-walnut/brain-gaussian-stack-3.jpeg" alt="" /> <img width=300 src="./outputs/2.4/brain-walnut/brain-laplacian-stack-3.jpeg" alt="" /></p>
+
+<p><img width=300 src="./outputs/2.4/brain-walnut/brain-gaussian-stack-4.jpeg" alt="" /> <img width=300 src="./outputs/2.4/brain-walnut/brain-laplacian-stack-4.jpeg" alt="" /></p>
+
+<p><img width=300 src="./outputs/2.4/brain-walnut/brain-gaussian-stack-5.jpeg" alt="" /> <img width=300 src="./outputs/2.4/brain-walnut/brain-laplacian-stack-5.jpeg" alt="" /></p>
+
+<p><img width=300 src="./outputs/2.4/brain-walnut/walnut-gaussian-stack-0.jpeg" alt="" /> <img width=300 src="./outputs/2.4/brain-walnut/walnut-laplacian-stack-0.jpeg" alt="" /></p>
+
+<p><img width=300 src="./outputs/2.4/brain-walnut/walnut-gaussian-stack-1.jpeg" alt="" /> <img width=300 src="./outputs/2.4/brain-walnut/walnut-laplacian-stack-1.jpeg" alt="" /></p>
+
+<p><img width=300 src="./outputs/2.4/brain-walnut/walnut-gaussian-stack-2.jpeg" alt="" /> <img width=300 src="./outputs/2.4/brain-walnut/walnut-laplacian-stack-2.jpeg" alt="" /></p>
+
+<p><img width=300 src="./outputs/2.4/brain-walnut/walnut-gaussian-stack-3.jpeg" alt="" /> <img width=300 src="./outputs/2.4/brain-walnut/walnut-laplacian-stack-3.jpeg" alt="" /></p>
+
+<p><img width=300 src="./outputs/2.4/brain-walnut/walnut-gaussian-stack-4.jpeg" alt="" /> <img width=300 src="./outputs/2.4/brain-walnut/walnut-laplacian-stack-4.jpeg" alt="" /></p>
+
+<p><img width=300 src="./outputs/2.4/brain-walnut/walnut-gaussian-stack-5.jpeg" alt="" /> <img width=300 src="./outputs/2.4/brain-walnut/walnut-laplacian-stack-5.jpeg" alt="" /></p>
+
+<p><img width=300 src="./outputs/2.4/brain-walnut/brain-walnut-laplacian-blend-0.jpeg" alt="" /> <img width=300 src="./outputs/2.4/brain-walnut/mask-stack-0.jpeg" alt="" /></p>
+
+<p><img width=300 src="./outputs/2.4/brain-walnut/brain-walnut-laplacian-blend-1.jpeg" alt="" /> <img width=300 src="./outputs/2.4/brain-walnut/mask-stack-1.jpeg" alt="" /></p>
+
+<p><img width=300 src="./outputs/2.4/brain-walnut/brain-walnut-laplacian-blend-2.jpeg" alt="" /> <img width=300 src="./outputs/2.4/brain-walnut/mask-stack-2.jpeg" alt="" /></p>
+
+<p><img width=300 src="./outputs/2.4/brain-walnut/brain-walnut-laplacian-blend-3.jpeg" alt="" /> <img width=300 src="./outputs/2.4/brain-walnut/mask-stack-3.jpeg" alt="" /></p>
+
+<p><img width=300 src="./outputs/2.4/brain-walnut/brain-walnut-laplacian-blend-4.jpeg" alt="" /> <img width=300 src="./outputs/2.4/brain-walnut/mask-stack-4.jpeg" alt="" /></p>
+
+<p><img width=300 src="./outputs/2.4/brain-walnut/brain-walnut-laplacian-blend-5.jpeg" alt="" /> <img width=300 src="./outputs/2.4/brain-walnut/mask-stack-5.jpeg" alt="" /></p>
+
+<figure>
+<img width=300 src="./outputs/2.4/brain-walnut/brain-walnut-blend-combined.jpeg" alt="Brain in walnut" />
+<figcaption>Brain in walnut</figcaption>
+</figure>
+
+<p>Scoring
+--&gt;
+The first part of the assignment is worth 30 points. The following things need to be answered in the html webpage along with the visualizations mentioned in the problem statement. The distribution is as follows:</p>
+
+<p>(15 points) Include a brief description of gradient magnitude computation.
+(15 points) Answer the questions asked in part 1.2
+The second part of the assignment is worth 65 points, as follows:</p>
+
+<p>20 points for the implementation of all four parts of the project.
+The following are the points for the project html page description as well as results:
+15 points for the Unsharp Masking: Show the progression of the original image to the sharpened image for the given image and an image of your choice.
+5 points for hybrid images and the Fourier analysis;
+5 points for including at least two hybrid image examples beyond the first (including at least one failure);
+15 points for multiresolution blending;
+5 points for including at least two multiresolution blending examples beyond the apple+orange, one of them with an irregular mask.
+5 points for clarity.</p>
+
+<p>For this project, you can also earn up to 10 extra points for the bells &amp; whistles mentioned above or suggest your own extensions (check with prof first).
+Tell us about the most important thing you learned from this project!</p>
+</body>
+</html>
