@@ -8,11 +8,14 @@ Fun with Filters and Frequencies!
 
 We start by generating edges for the cameraman picture using gradient magnitude computation. The way it works is by first generating the the horizontal derivative of the image, followed by the vertical derivative of the image, and then by taking the square root of the sum of squares of both deritvatives, just like how you compute the pythagorean theorem. This way, the negative values in each derivative image will turn into positives and you will be left with an image where edges are all colored white.
 
-![Original Cameraman](./inputs/1.1/cameraman.png)
+![](./inputs/1.1/cameraman.png)
 
-![Dx](./outputs/1.1/dx-cameraman.jpeg) ![Dy](./outputs/1.1/dy-cameraman.jpeg)
 
-![Gradient magnitude](./outputs/1.1/edge-cameraman.jpeg)
+Dx: ![](./outputs/1.1/dx-cameraman.jpeg)
+
+Dy: ![](./outputs/1.1/dy-cameraman.jpeg)
+
+Gradient magnitude: ![](./outputs/1.1/edge-cameraman.jpeg)
 
 Then, we binarize the gradient magnitude in order to remove a lot of the noise within the image:
 
@@ -22,23 +25,29 @@ Then, we binarize the gradient magnitude in order to remove a lot of the noise w
 
 First, we try to blur the image before doing what we did in the last part. The results are as follows:
 
-![Original](./inputs/1.1/cameraman.png) ![Blured](./outputs/1.2/cameraman-blur.jpeg) 
+Original: ![](./inputs/1.1/cameraman.png) 
 
-![Edge gradient magnitude](./outputs/1.2/edge-cameraman.jpeg)
+Blured: ![](./outputs/1.2/cameraman-blur.jpeg) 
 
-![Binarized](./outputs/1.2/binarized-edge-cameraman.jpeg)
+Edge gradient magnitude: ![](./outputs/1.2/edge-cameraman.jpeg)
+
+Binarized: ![](./outputs/1.2/binarized-edge-cameraman.jpeg)
 
 Then, instead of applying a gaussian blur and then the derivatives as two convolutional operations, we convolve the gaussian by the derivatives so that the whole operation is done in one convolution on the image.
 
 
 
-![Derivative of gaussian Dx](./outputs/1.2/blurrdx.jpeg)  ![Derivative of gaussian Dy](./outputs/1.2/blurrdy.jpeg)
+Derivative of gaussian Dx: ![](./outputs/1.2/blurrdx.jpeg) 
 
-![Dx result](./outputs/1.2/dx-cameraman.jpeg) ![Dy result](./outputs/1.2/dy-cameraman.jpeg) 
+Derivative of gaussian Dy: ![](./outputs/1.2/blurrdy.jpeg)
 
-![Gradient magnitude](./outputs/1.2/dog-edge-cameraman.jpeg)
+Dx result: ![](./outputs/1.2/dx-cameraman.jpeg)
 
-![Binarized](./outputs/1.2/binarized-dog-edge-cameraman.jpeg)
+Dy result: ![](./outputs/1.2/dy-cameraman.jpeg) 
+
+Gradient magnitude: ![](./outputs/1.2/dog-edge-cameraman.jpeg)
+
+Binarized: ![](./outputs/1.2/binarized-dog-edge-cameraman.jpeg)
 
 
 ## Part 2: Fun with Frequencies!
@@ -48,16 +57,16 @@ Then, instead of applying a gaussian blur and then the derivatives as two convol
 We use un-sharp masking in order to sharpen the following images.
 
 ### Sharpen Taj Mahal
-![Original](./inputs/2.1/taj.jpeg) ![Sharpened](./outputs/2.1/sharp-taj.jpeg)
+![](./inputs/2.1/taj.jpeg) ![](./outputs/2.1/sharp-taj.jpeg)
 
 ### Sharpen Dog
-![Original](./inputs/2.1/dog.jpeg) ![Sharpened](./outputs/2.1/sharp-dog.jpeg)
+![](./inputs/2.1/dog.jpeg) ![](./outputs/2.1/sharp-dog.jpeg)
 
 ### Blur image, then sharpen
 
 I tried to blur a sharp image, then sharpen it back to see what happens. The result is a little blurrier and has fewer high frequencies than the original image.
 
-![Original](./inputs/2.1/sharp.jpeg) ![Blured](./outputs/2.1/blur-sharp.jpeg) ![Sharpened of Blured](./outputs/2.1/sharp-blur-sharp.jpeg)
+![](./inputs/2.1/sharp.jpeg) ![](./outputs/2.1/blur-sharp.jpeg) ![](./outputs/2.1/sharp-blur-sharp.jpeg)
  
 ## Part 2.2: Hybrid Images
 
@@ -65,39 +74,43 @@ In this part, I layer two images on top of each other so that in distance it app
 
 ### Derek and Nutmeg
 
-![Derek](./inputs/2.2/DerekPicture.jpg) ![Nutmeg](./inputs/2.2/nutmeg.jpg)
+![](./inputs/2.2/DerekPicture.jpg) ![](./inputs/2.2/nutmeg.jpg)
 
-![Derek Aligned](./inputs/2.2/DerekPicture-aligned.jpeg) ![Nutmeg Aligned](./inputs/2.2/nutmeg-aligned.jpeg)
+![](./inputs/2.2/DerekPicture-aligned.jpeg) ![](./inputs/2.2/nutmeg-aligned.jpeg)
 
-![Nutmeg over Derek](./outputs/2.2/DerekPicture-aligned-nutmeg-aligned-combined.jpeg)
+![](./outputs/2.2/DerekPicture-aligned-nutmeg-aligned-combined.jpeg)
 
 The fourier results of the images are shown below:
 
-![Derek FFT](./outputs/2.2/DerekPicture-aligned-fft.jpeg) ![Derek Blur (low frequencies) FFT](./outputs/2.2/DerekPicture-aligned-blur-fft.jpeg) 
+Derek FFT: ![](./outputs/2.2/DerekPicture-aligned-fft.jpeg) 
 
-![Nutmeg FFT](./outputs/2.2/nutmeg-aligned-fft.jpeg) ![Nutmeg high frequencies FFT](./outputs/2.2/nutmeg-aligned-high-fft.jpeg)
+Derek Blur (low frequencies) FFT: ![](./outputs/2.2/DerekPicture-aligned-blur-fft.jpeg) 
 
-![Combination Derek + Nutmeg FFTs](./outputs/2.2/DerekPicture-aligned-nutmeg-aligned-combined-fft.jpeg)
+Nutmeg FFT: ![](./outputs/2.2/nutmeg-aligned-fft.jpeg)
+
+Nutmeg high frequencies FFT: ![](./outputs/2.2/nutmeg-aligned-high-fft.jpeg)
+
+Combination Derek + Nutmeg FFTs: ![](./outputs/2.2/DerekPicture-aligned-nutmeg-aligned-combined-fft.jpeg)
 
 ### Airplane and Eagle (Failure)
 
 Because the eagle has a much larger and much darker wing than the plane, it isn't as smooth as the other results. It's obvious that two images are layer on each other. Other than that, the tips look good.
 
-![Airplane](./inputs/2.2/airplane.jpeg) ![Eagle](./inputs/2.2/eagle.jpeg)
+![](./inputs/2.2/airplane.jpeg) ![](./inputs/2.2/eagle.jpeg)
 
-![Airplane Aligned](./inputs/2.2/airplane-aligned.jpeg) ![Eagle Aligned](./inputs/2.2/eagle-aligned.jpeg)
+![](./inputs/2.2/airplane-aligned.jpeg) ![](./inputs/2.2/eagle-aligned.jpeg)
 
-![Eagle over Airplane](./outputs/2.2/eagle-aligned-airplane-aligned-combined.jpeg)
+![](./outputs/2.2/eagle-aligned-airplane-aligned-combined.jpeg)
 
 ### John DeNero and Josh Hug
 
 This is my favorite.
 
-![John DeNero](./inputs/2.2/denero.jpeg) ![Josh Hug](./inputs/2.2/josh.jpeg)
+![](./inputs/2.2/denero.jpeg) ![](./inputs/2.2/josh.jpeg)
 
-![John DeNero Aligned](./inputs/2.2/denero-aligned.jpeg) ![Josh Hug Aligned](./inputs/2.2/josh-aligned.jpeg)
+![](./inputs/2.2/denero-aligned.jpeg) ![](./inputs/2.2/josh-aligned.jpeg)
 
-![Josh Hug over John DeNero ](./outputs/2.2/denero-aligned-josh-aligned-combined.jpeg)
+![](./outputs/2.2/denero-aligned-josh-aligned-combined.jpeg)
 
 
 ## Multi-resolution Blending and the Oraple journey
@@ -106,7 +119,7 @@ This is my favorite.
 
 Here, we try to blend an apple and orange together. We use basic alpha blending where the images start smoothly reducing in alpha in the middle, so that they can be added on top of each other and appear as if they go into each other.
 
-![Apple](./inputs/2.3/apple.jpeg) ![Orange](./inputs/2.3/orange.jpeg)
+![](./inputs/2.3/apple.jpeg) ![](./inputs/2.3/orange.jpeg)
 
 The following is the stack the closely resembles the figure in the original paper. Rows 1, 2, and 3 show the 0th, 2nd, and 4th laplacians of the apple, orange, and the apple-orange blend. The last row is just the original images alpha blended.
 
@@ -125,7 +138,7 @@ To improve on the blending, we settle on a better algorithm that combines each l
 
 ### The Oraple
 
-![Apple](./inputs/2.4/apple-orange/apple.jpeg) ![Orange](./inputs/2.4/apple-orange/orange.jpeg)
+![](./inputs/2.4/apple-orange/apple.jpeg) ![](./inputs/2.4/apple-orange/orange.jpeg)
 
 ![](./outputs/2.4/apple-orange/apple-gaussian-stack-0.jpeg) ![](./outputs/2.4/apple-orange/apple-laplacian-stack-0.jpeg)
 
@@ -167,14 +180,14 @@ To improve on the blending, we settle on a better algorithm that combines each l
 
 ### Sun in a Sunflower
 
-![Sun](./inputs/2.4/sun-flower/sun.jpeg) ![Sunflower](./inputs/2.4/sun-flower/flower.jpeg)
+![](./inputs/2.4/sun-flower/sun.jpeg) ![](./inputs/2.4/sun-flower/flower.jpeg)
 
-![Sun in sunflower](./outputs/2.4/sun-flower/sun-flower-blend-combined.jpeg)
+![](./outputs/2.4/sun-flower/sun-flower-blend-combined.jpeg)
 
 
 ### Brain in a walnut (favorite)
 
-![Brain](./inputs/2.4/brain-walnut/brain.jpeg) ![Walnut](./inputs/2.4/brain-walnut/walnut.jpeg)
+![](./inputs/2.4/brain-walnut/brain.jpeg) ![](./inputs/2.4/brain-walnut/walnut.jpeg)
 
 ![](./outputs/2.4/brain-walnut/brain-gaussian-stack-0.jpeg) ![](./outputs/2.4/brain-walnut/brain-laplacian-stack-0.jpeg)
 
@@ -212,7 +225,7 @@ To improve on the blending, we settle on a better algorithm that combines each l
 
 ![](./outputs/2.4/brain-walnut/brain-walnut-laplacian-blend-5.jpeg) ![](./outputs/2.4/brain-walnut/mask-stack-5.jpeg)
 
-![Brain in walnut](./outputs/2.4/brain-walnut/brain-walnut-blend-combined.jpeg)
+![](./outputs/2.4/brain-walnut/brain-walnut-blend-combined.jpeg)
 
 
 Scoring
